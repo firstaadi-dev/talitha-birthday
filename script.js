@@ -19,7 +19,32 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize text-to-speech
     initTextToSpeech();
+    
+    // Play music on countdown screen
+    playCountdownMusic();
 });
+
+// Play music on countdown screen
+function playCountdownMusic() {
+    const backgroundMusic = document.getElementById('background-music-waiting');
+    
+    // Make sure the audio is loaded
+    backgroundMusic.load();
+    
+    // Set volume and play
+    backgroundMusic.volume = 0.5;
+    
+    // Try to play immediately
+    backgroundMusic.play().catch(error => {
+        console.log('Autoplay prevented. Adding click event to start music.');
+        
+        // Add a one-time click event to the document to start music on first interaction
+        document.addEventListener('click', function startMusicOnInteraction() {
+            backgroundMusic.play().catch(e => console.log('Still could not play audio:', e));
+            document.removeEventListener('click', startMusicOnInteraction);
+        }, { once: true });
+    });
+}
 
 // Hide all content except countdown
 function hideContentUntilCountdownEnds() {
@@ -45,6 +70,10 @@ function hideContentUntilCountdownEnds() {
     messageContainer.className = 'motivational-message';
     messageContainer.innerHTML = '<p id="motivation-text">Loading message...</p>';
     document.querySelector('.countdown-fullscreen').appendChild(messageContainer);
+    
+    // Pause background music waiting
+    const backgroundMusic = document.getElementById('background-music-waiting');
+    backgroundMusic.pause();
     
     // Start rotating messages
     rotateMotivationalMessages();
@@ -241,8 +270,9 @@ function initMusicPlayer() {
     const musicToggle = document.getElementById('music-toggle');
     const backgroundMusic = document.getElementById('background-music');
     
-    // Set initial state
-    let isMusicPlaying = false;
+    // Set initial state - music is already playing from countdown
+    let isMusicPlaying = true;
+    musicToggle.innerHTML = '<i class="fas fa-pause"></i>';
     
     // Toggle music on button click
     musicToggle.addEventListener('click', function() {
