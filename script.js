@@ -225,75 +225,35 @@ function typeWriter(element, text, speed, callback) {
 function initTextToSpeech() {
     const readWishBtn = document.getElementById('read-wish');
     
-    // Check if the browser supports speech synthesis
-    if ('speechSynthesis' in window) {
-        // Load voices
-        let voices = [];
-        
-        function loadVoices() {
-            voices = window.speechSynthesis.getVoices();
+    // Create audio element for custom message
+    const customAudio = new Audio('tts/custom_haechan.mp3');
+    
+    readWishBtn.addEventListener('click', function() {
+        // Pause background music if it's playing
+        const backgroundMusic = document.getElementById('background-music');
+        const wasMusicPlaying = !backgroundMusic.paused;
+        if (wasMusicPlaying) {
+            backgroundMusic.pause();
+            document.getElementById('music-toggle').innerHTML = '<i class="fas fa-music"></i>';
         }
         
-        loadVoices();
+        // Change button text while playing
+        readWishBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Playing...';
+        readWishBtn.disabled = true;
         
-        // Chrome loads voices asynchronously
-        if (window.speechSynthesis.onvoiceschanged !== undefined) {
-            window.speechSynthesis.onvoiceschanged = loadVoices;
-        }
+        // Play the custom audio
+        customAudio.play();
         
-        readWishBtn.addEventListener('click', function() {
-            // Pause background music if it's playing
-            const backgroundMusic = document.getElementById('background-music');
-            const wasMusicPlaying = !backgroundMusic.paused;
+        // When audio ends
+        customAudio.onended = function() {
+            readWishBtn.innerHTML = '<i class="fas fa-volume-up"></i> Listen to Birthday Wish';
+            readWishBtn.disabled = false;
+            
+            // Resume music if it was playing
             if (wasMusicPlaying) {
-                backgroundMusic.pause();
-                document.getElementById('music-toggle').innerHTML = '<i class="fas fa-music"></i>';
+                backgroundMusic.play();
+                document.getElementById('music-toggle').innerHTML = '<i class="fas fa-pause"></i>';
             }
-            
-            // Get the text to read
-            const specialNote = document.querySelector('.special-note').textContent;
-            const wishList = Array.from(document.querySelectorAll('.wish-content ul li')).map(li => li.textContent);
-            const fullText = "Here is my birthday wish for you, Talitha. " + wishList.join('. ') + ". " + specialNote;
-            
-            // Create a speech synthesis utterance
-            const utterance = new SpeechSynthesisUtterance(fullText);
-            
-            // Configure the voice
-            utterance.rate = 0.9; // Slightly slower than normal
-            utterance.pitch = 0.9; // Lower pitch for more masculine sound
-            utterance.volume = 1;
-            
-            // Try to use a male voice if available
-            voices = window.speechSynthesis.getVoices();
-            const preferredVoices = voices.filter(voice => 
-                voice.lang.includes('en') && (voice.name.includes('Male') || voice.name.includes('David') || voice.name.includes('Thomas') || voice.name.includes('Daniel'))
-            );
-            
-            if (preferredVoices.length > 0) {
-                utterance.voice = preferredVoices[0];
-            }
-            
-            // Change button text while speaking
-            readWishBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Speaking...';
-            readWishBtn.disabled = true;
-            
-            // When speech ends
-            utterance.onend = function() {
-                readWishBtn.innerHTML = '<i class="fas fa-volume-up"></i> Listen to Birthday Wish';
-                readWishBtn.disabled = false;
-                
-                // Resume music if it was playing
-                if (wasMusicPlaying) {
-                    backgroundMusic.play();
-                    document.getElementById('music-toggle').innerHTML = '<i class="fas fa-pause"></i>';
-                }
-            };
-            
-            // Speak the text
-            window.speechSynthesis.speak(utterance);
-        });
-    } else {
-        // If speech synthesis is not supported, hide the button
-        readWishBtn.style.display = 'none';
-    }
+        };
+    });
 } 
