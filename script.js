@@ -1,6 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize countdown timer
+    // Initialize countdown
     initCountdown();
+    
+    // Hide all content except countdown initially
+    hideContentUntilCountdownEnds();
     
     // Initialize floating hearts
     initFloatingHearts();
@@ -18,10 +21,131 @@ document.addEventListener('DOMContentLoaded', function() {
     initTextToSpeech();
 });
 
+// Hide all content except countdown
+function hideContentUntilCountdownEnds() {
+    // Hide all sections except countdown
+    const sectionsToHide = document.querySelectorAll('section:not(.countdown), header, .music-control, .floating-hearts-container');
+    sectionsToHide.forEach(section => {
+        section.style.display = 'none';
+    });
+    
+    // Add a special class to the countdown section to make it centered
+    document.querySelector('.countdown').classList.add('countdown-fullscreen');
+    
+    // Create particles container
+    const particlesContainer = document.createElement('div');
+    particlesContainer.className = 'particles';
+    document.querySelector('.countdown-fullscreen').appendChild(particlesContainer);
+    
+    // Create particles
+    createParticles(particlesContainer);
+    
+    // Add motivational message container
+    const messageContainer = document.createElement('div');
+    messageContainer.className = 'motivational-message';
+    messageContainer.innerHTML = '<p id="motivation-text">Loading message...</p>';
+    document.querySelector('.countdown-fullscreen').appendChild(messageContainer);
+    
+    // Start rotating messages
+    rotateMotivationalMessages();
+}
+
+// Rotate motivational messages
+function rotateMotivationalMessages() {
+    const messages = [
+        "Can't wait to celebrate with you! ❤️",
+        "Every second brings us closer to your special day!",
+        "Preparing something special just for you...",
+        "Your birthday is going to be amazing!",
+        "Counting down to the best day of the year!",
+        "Get ready for an NCT-filled celebration!",
+        "You deserve all the happiness in the world!",
+        "Your smile is worth waiting for!",
+        "The best is yet to come!",
+        "Excited to make your day special!"
+    ];
+    
+    let currentIndex = 0;
+    
+    // Update message immediately
+    document.getElementById('motivation-text').textContent = messages[currentIndex];
+    
+    // Change message every 5 seconds
+    setInterval(() => {
+        currentIndex = (currentIndex + 1) % messages.length;
+        
+        // Fade out
+        const textElement = document.getElementById('motivation-text');
+        textElement.style.opacity = 0;
+        
+        // Change text and fade in after a short delay
+        setTimeout(() => {
+            textElement.textContent = messages[currentIndex];
+            textElement.style.opacity = 1;
+        }, 500);
+    }, 5000);
+}
+
+// Create floating particles
+function createParticles(container) {
+    const colors = ['#ff9a9e', '#fad0c4', '#ffd1ff', '#a18cd1', '#ffffff'];
+    
+    // Create 50 particles
+    for (let i = 0; i < 50; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        
+        // Random properties
+        const size = Math.random() * 15 + 5; // 5-20px
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        const left = Math.random() * 100; // 0-100%
+        const duration = Math.random() * 15 + 10; // 10-25s
+        const delay = Math.random() * 5; // 0-5s
+        
+        // Apply styles
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.backgroundColor = color;
+        particle.style.left = `${left}%`;
+        particle.style.top = '100%';
+        particle.style.animationDuration = `${duration}s`;
+        particle.style.animationDelay = `${delay}s`;
+        
+        // Add to container
+        container.appendChild(particle);
+    }
+}
+
+// Show all content
+function showAllContent() {
+    // Show all hidden sections
+    const hiddenSections = document.querySelectorAll('section, header, .music-control, .floating-hearts-container');
+    hiddenSections.forEach(section => {
+        section.style.display = '';
+    });
+    
+    // Remove the fullscreen class from countdown
+    document.querySelector('.countdown').classList.remove('countdown-fullscreen');
+    
+    // Remove particles and motivational messages
+    const particlesContainer = document.querySelector('.particles');
+    if (particlesContainer) {
+        particlesContainer.remove();
+    }
+    
+    const motivationalMessage = document.querySelector('.motivational-message');
+    if (motivationalMessage) {
+        motivationalMessage.remove();
+    }
+    
+    // Launch confetti to celebrate
+    launchConfetti();
+}
+
 // Countdown Timer
 function initCountdown() {
     // Set the date we're counting down to (Talitha's birthday)
-    const birthdayDate = new Date("2024-06-15T00:00:00").getTime(); // Talitha's birthday
+    const birthdayDate = new Date("2025-03-24T00:00:00").getTime(); // Talitha's birthday - June 15, 2024
     
     // Update the countdown every 1 second
     const countdownTimer = setInterval(function() {
@@ -35,6 +159,9 @@ function initCountdown() {
         if (distance < 0) {
             clearInterval(countdownTimer);
             document.getElementById("countdown-timer").innerHTML = "<h3>Happy Birthday! 🎉</h3>";
+            
+            // Show all content after a short delay
+            setTimeout(showAllContent, 2000);
             return;
         }
         
