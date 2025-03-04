@@ -71,10 +71,6 @@ function hideContentUntilCountdownEnds() {
     messageContainer.innerHTML = '<p id="motivation-text">Loading message...</p>';
     document.querySelector('.countdown-fullscreen').appendChild(messageContainer);
     
-    // Pause background music waiting
-    const backgroundMusic = document.getElementById('background-music-waiting');
-    backgroundMusic.pause();
-    
     // Start rotating messages
     rotateMotivationalMessages();
 }
@@ -166,6 +162,32 @@ function showAllContent() {
     if (motivationalMessage) {
         motivationalMessage.remove();
     }
+    
+    // Transition from waiting music to main music
+    const waitingMusic = document.getElementById('background-music-waiting');
+    const mainMusic = document.getElementById('background-music');
+    
+    // Fade out waiting music
+    let waitingVolume = waitingMusic.volume;
+    const fadeOutInterval = setInterval(() => {
+        if (waitingVolume > 0.05) {
+            waitingVolume -= 0.05;
+            waitingMusic.volume = waitingVolume;
+        } else {
+            clearInterval(fadeOutInterval);
+            waitingMusic.pause();
+            waitingMusic.currentTime = 0;
+            
+            // Start main music
+            mainMusic.volume = 0.5;
+            mainMusic.play().catch(error => {
+                console.log('Could not play main music:', error);
+            });
+            
+            // Update music toggle button to show pause icon
+            document.getElementById('music-toggle').innerHTML = '<i class="fas fa-pause"></i>';
+        }
+    }, 100);
     
     // Launch confetti to celebrate
     launchConfetti();
