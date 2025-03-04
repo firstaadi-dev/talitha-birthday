@@ -1,0 +1,573 @@
+/* NCT-inspired color palette */
+:root {
+    --nct-green: #00b140;
+    --nct-black: #000000;
+    --nct-white: #ffffff;
+    --nct-accent: #ff3399;
+    --nct-secondary: #6600cc;
+    --nct-gradient-start: #00b140;
+    --nct-gradient-end: #6600cc;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--nct-black);
+    color: var(--nct-white);
+    line-height: 1.6;
+    overflow-x: hidden;
+    background-image: 
+        radial-gradient(circle at 20% 30%, rgba(0, 177, 64, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(102, 0, 204, 0.15) 0%, transparent 40%);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Music Control */
+.music-control {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 8px 15px;
+    border-radius: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.music-control button {
+    background: none;
+    border: none;
+    color: var(--nct-green);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.music-control button:hover {
+    transform: scale(1.2);
+}
+
+.music-control span {
+    margin-left: 10px;
+    font-size: 0.9rem;
+    color: var(--nct-white);
+}
+
+/* Header Styles */
+header {
+    text-align: center;
+    padding: 3rem 0;
+    position: relative;
+}
+
+.glitch {
+    font-size: 3.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    position: relative;
+    color: var(--nct-white);
+    letter-spacing: 5px;
+    animation: glitch 5s infinite;
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.glitch::before {
+    left: 2px;
+    text-shadow: -2px 0 var(--nct-green);
+    clip: rect(44px, 450px, 56px, 0);
+    animation: glitch-anim 5s infinite linear alternate-reverse;
+}
+
+.glitch::after {
+    left: -2px;
+    text-shadow: -2px 0 var(--nct-accent);
+    clip: rect(44px, 450px, 56px, 0);
+    animation: glitch-anim2 5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+    0% {
+        clip: rect(31px, 9999px, 94px, 0);
+    }
+    5% {
+        clip: rect(70px, 9999px, 71px, 0);
+    }
+    10% {
+        clip: rect(29px, 9999px, 83px, 0);
+    }
+    15% {
+        clip: rect(16px, 9999px, 91px, 0);
+    }
+    20% {
+        clip: rect(2px, 9999px, 23px, 0);
+    }
+    25% {
+        clip: rect(46px, 9999px, 33px, 0);
+    }
+    100% {
+        clip: rect(46px, 9999px, 33px, 0);
+    }
+}
+
+@keyframes glitch-anim2 {
+    0% {
+        clip: rect(96px, 9999px, 78px, 0);
+    }
+    5% {
+        clip: rect(82px, 9999px, 15px, 0);
+    }
+    10% {
+        clip: rect(54px, 9999px, 64px, 0);
+    }
+    15% {
+        clip: rect(79px, 9999px, 57px, 0);
+    }
+    20% {
+        clip: rect(20px, 9999px, 78px, 0);
+    }
+    25% {
+        clip: rect(15px, 9999px, 34px, 0);
+    }
+    100% {
+        clip: rect(15px, 9999px, 34px, 0);
+    }
+}
+
+@keyframes glitch {
+    0% {
+        text-shadow: 0.05em 0 0 var(--nct-green), -0.05em -0.025em 0 var(--nct-accent);
+    }
+    14% {
+        text-shadow: 0.05em 0 0 var(--nct-green), -0.05em -0.025em 0 var(--nct-accent);
+    }
+    15% {
+        text-shadow: -0.05em -0.025em 0 var(--nct-green), 0.025em 0.025em 0 var(--nct-accent);
+    }
+    49% {
+        text-shadow: -0.05em -0.025em 0 var(--nct-green), 0.025em 0.025em 0 var(--nct-accent);
+    }
+    50% {
+        text-shadow: 0.025em 0.05em 0 var(--nct-green), 0.05em 0 0 var(--nct-accent);
+    }
+    99% {
+        text-shadow: 0.025em 0.05em 0 var(--nct-green), 0.05em 0 0 var(--nct-accent);
+    }
+    100% {
+        text-shadow: -0.025em 0 0 var(--nct-green), -0.025em -0.025em 0 var(--nct-accent);
+    }
+}
+
+.recipient-name {
+    font-size: 2rem;
+    margin-top: 1rem;
+    color: var(--nct-green);
+    font-weight: 400;
+}
+
+/* Intro Section */
+.intro {
+    padding: 2rem 0;
+    text-align: center;
+}
+
+.message {
+    max-width: 800px;
+    margin: 0 auto;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 2rem;
+    border-radius: 10px;
+    border: 1px solid var(--nct-green);
+    box-shadow: 0 0 20px rgba(0, 177, 64, 0.3);
+}
+
+.message p {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.signature {
+    margin-top: 2rem;
+    font-style: italic;
+    color: var(--nct-accent);
+}
+
+/* Countdown Section */
+.countdown {
+    padding: 3rem 0;
+    text-align: center;
+}
+
+.countdown h2 {
+    margin-bottom: 2rem;
+    color: var(--nct-green);
+    font-size: 2rem;
+}
+
+#countdown-timer {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.time-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(135deg, var(--nct-gradient-start), var(--nct-gradient-end));
+    padding: 1.5rem;
+    border-radius: 10px;
+    min-width: 100px;
+}
+
+.time-block span:first-child {
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.time-label {
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}
+
+/* NCT Gallery */
+.nct-gallery {
+    padding: 3rem 0;
+}
+
+.nct-gallery h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--nct-green);
+    font-size: 2rem;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.gallery-item {
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s;
+}
+
+.gallery-item:hover {
+    transform: translateY(-10px);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    transition: transform 0.5s;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.1);
+}
+
+/* Special Messages Section */
+.special-messages {
+    padding: 3rem 0;
+    text-align: center;
+}
+
+.special-messages h2 {
+    margin-bottom: 2rem;
+    color: var(--nct-green);
+    font-size: 2rem;
+}
+
+.message-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.message-card {
+    height: 200px;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.message-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.message-card:hover .message-card-inner {
+    transform: rotateY(180deg);
+}
+
+.message-card-front, .message-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+.message-card-front {
+    background: linear-gradient(135deg, var(--nct-gradient-start), var(--nct-gradient-end));
+}
+
+.message-card-front span {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.message-card-back {
+    background-color: var(--nct-black);
+    border: 2px solid var(--nct-accent);
+    transform: rotateY(180deg);
+}
+
+.message-card-back p {
+    font-size: 1rem;
+}
+
+/* NCT Quotes Section */
+.nct-quotes {
+    padding: 3rem 0;
+    text-align: center;
+}
+
+.nct-quotes h2 {
+    margin-bottom: 2rem;
+    color: var(--nct-green);
+    font-size: 2rem;
+}
+
+.quote-slider {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.quote {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 2rem;
+    border-radius: 10px;
+    border: 1px solid var(--nct-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.quote p {
+    font-size: 1.2rem;
+    font-style: italic;
+    margin-bottom: 1rem;
+}
+
+.member {
+    color: var(--nct-accent);
+    font-weight: 600;
+}
+
+/* Birthday Wish Section */
+.birthday-wish {
+    padding: 3rem 0;
+    text-align: center;
+}
+
+.birthday-wish h2 {
+    margin-bottom: 2rem;
+    color: var(--nct-green);
+    font-size: 2rem;
+}
+
+.wish-content {
+    max-width: 800px;
+    margin: 0 auto;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 2rem;
+    border-radius: 10px;
+    border: 1px solid var(--nct-green);
+}
+
+.wish-content p {
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+}
+
+.wish-content ul {
+    text-align: left;
+    padding-left: 2rem;
+}
+
+.wish-content li {
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.special-note {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    border: 2px dashed var(--nct-accent);
+    border-radius: 10px;
+    font-style: italic;
+    font-size: 1.2rem;
+    color: var(--nct-white);
+    background-color: rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+.read-wish-btn {
+    display: block;
+    margin: 2rem auto 0;
+    padding: 0.8rem 1.5rem;
+    background: linear-gradient(135deg, var(--nct-gradient-start), var(--nct-gradient-end));
+    color: var(--nct-white);
+    border: none;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.read-wish-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 20px rgba(0, 0, 0, 0.3);
+}
+
+.read-wish-btn i {
+    margin-right: 8px;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 2rem 0;
+    margin-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+footer p {
+    margin-bottom: 0.5rem;
+}
+
+.copyright {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Floating Hearts Animation */
+.floating-hearts {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.heart {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: none;
+    pointer-events: none;
+    animation: float 10s linear infinite;
+}
+
+.heart svg {
+    width: 100%;
+    height: 100%;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-1000px) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .glitch {
+        font-size: 2.5rem;
+    }
+    
+    .recipient-name {
+        font-size: 1.5rem;
+    }
+    
+    #countdown-timer {
+        flex-wrap: wrap;
+    }
+    
+    .time-block {
+        min-width: 80px;
+        padding: 1rem;
+    }
+    
+    .gallery {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+    
+    .message-container {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 1rem;
+    }
+    
+    .glitch {
+        font-size: 2rem;
+    }
+    
+    .time-block {
+        min-width: 70px;
+        padding: 0.8rem;
+    }
+    
+    .gallery {
+        grid-template-columns: 1fr;
+    }
+} 
