@@ -197,6 +197,7 @@ function showAllContent() {
 function initCountdown() {
     // Set the date we're counting down to (Talitha's birthday)
     const birthdayDate = new Date("2025-03-24T00:00:00").getTime(); // Talitha's birthday - March 24, 2025
+    // const birthdayDate = new Date("2024-03-24T00:00:00").getTime(); // Talitha's birthday - March 24, 2025 DEBUG
     
     // Update the countdown every 1 second
     const countdownTimer = setInterval(function() {
